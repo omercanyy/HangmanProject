@@ -1,0 +1,5 @@
+BotName	GameSettingTypeName	GameWinRate
+BasicRandomBot	Default	20.0% (2/10)
+BasicRandomBot	ShortWords(1-6 letters)	0.0% (0/10)
+BasicRandomBot	ShortWords20Guesses(1-6 letters)	60.0% (6/10)
+BasicRandomBot	MediumWords(7-12 letters)	0.0% (0/10)
