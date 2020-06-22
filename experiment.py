@@ -44,6 +44,8 @@ def main():
             Hangman.Settings.upper: 11
         }
     }
+
+    # TODO: Bots should be stateless
     bots = {
         "BasicRandomBot": RandomPlayer(),
         "NaiveFreqBot": NaivePlayer()
