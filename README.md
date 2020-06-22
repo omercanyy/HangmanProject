@@ -7,9 +7,9 @@ Create a bot that plays Hangman game with a great success.
 ## Plan
 Current plan is to create;
 1. Hangman Game play API
-2. Create 3 bots of different "intelligence"
+2. 3 bots of different "intelligence"
   a. Random Bot: Just guesses random letters everytime. This a base line for the start of this project
-  b. Basic Ingelligent Bot: This bot uses a very basic strategy to fake intelligence where it gives letter by the frequency starting from the most frequent one to the least.
+  b. Naive Bot: This bot uses a very basic strategy to fake intelligence where it gives letter by the frequency starting from the most frequent one to the least.
   c. Intelligent Bot: This bot basically will be the product solution we will "ship".
 
 ## Methodology
@@ -29,4 +29,6 @@ With a very shallow analysis of the game complexity. It's obvious that we can ha
   2. Short Word (1-6 letters): A word picked from words with length in between 1 and 6 letters (inclusive) 10 total guesses.
   3. Long Word (7-12 letters): A word picked from words with length in between 7 and 12 letters (inclusive) 10 total guesses.
   4. Short word More Guesses (1-6 letters): A word picked from words with length in between 1 and 6 letters (inclusive) 20 total guesses.
+
+#### Dimensions in the SkillSummary report for bots
 
