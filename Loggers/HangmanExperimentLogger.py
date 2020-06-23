@@ -1,5 +1,6 @@
 import json
 from datetime import datetime as dt
+from GamePlay.HangmanGameAPI import Hangman
 
 
 class HangmanLogger:
@@ -10,6 +11,8 @@ class HangmanLogger:
         self.__detail_logs = []
 
     def log(self, bot_name, setting_name, last_resp_json):
+        last_resp_json = self.settings_serializer(last_resp_json)
+
         self.__detail_logs.append(
             [
                 bot_name,
@@ -79,3 +82,15 @@ class HangmanLogger:
         f = open(file, 'w', encoding='utf-8')
         for row in [header] + data:
             f.write('\t'.join(map(str, row)) + '\n')
+
+    @staticmethod
+    def settings_serializer(resp_json):
+        new_resp_json = dict()
+        for key, val in resp_json.items():
+            # If key is not str make it str
+            if isinstance(key, Hangman.Settings):
+                key = key.value
+
+            new_resp_json[key] = val
+        return new_resp_json
+
