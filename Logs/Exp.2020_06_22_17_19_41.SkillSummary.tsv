@@ -1,0 +1,9 @@
+BotName	GameSettingTypeName	GameWinRate
+BasicRandomBot	Default	14.399999999999999% (144/1000)
+NaiveFreqBot	Default	45.800000000000004% (458/1000)
+BasicRandomBot	ShortWords(1-6 letters)	14.499999999999998% (145/1000)
+NaiveFreqBot	ShortWords(1-6 letters)	56.89999999999999% (569/1000)
+BasicRandomBot	ShortWords20Guesses(1-6 letters)	55.00000000000001% (550/1000)
+NaiveFreqBot	ShortWords20Guesses(1-6 letters)	100.0% (1000/1000)
+BasicRandomBot	LongWords(7-12 letters)	0.2% (2/1000)
+NaiveFreqBot	LongWords(7-12 letters)	0.0% (0/1000)

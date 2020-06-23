@@ -1,30 +1,39 @@
-from copy import deepcopy
-
 from Bots.Bot1RandomPlayer import RandomPlayer
 from Bots.Bot2NaivePlayer import NaivePlayer
 from GamePlay.HangmanGameAPI import Hangman
 from Loggers.HangmanExperimentLogger import HangmanLogger
 
 
-def settings_serializer(resp_json):
-    new_resp_json = dict()
-    for key, val in resp_json.items():
-        # If key is not str make it str
-        if isinstance(key, Hangman.Settings):
-            key = key.value
+class Experiment:
 
-        new_resp_json[key] = val
-    return new_resp_json
+    def __init__(self, settings, bots, logger, sample_size):
+        self.settings = settings
+        self.bots = bots
+        self.logger = logger
+        self.sample_size = sample_size
 
+    def Run(self):
+        for setting_name, setting in self.settings.items():
+            print(f"Running Exp for Game {setting_name}...")
+            for i in range(self.sample_size):
+                if i > 1 and i % 100 == 0:
+                    print(f"\t{i} out of {self.sample_size} are done...")
+                for bot_name, bot in self.bots.items():
+                    game = Hangman(setting)
+                    bot = bot()
+                    last_resp_json = self.play(game, bot)
+                    self.logger.log(bot_name, setting_name, last_resp_json)
+        self.logger.export_logs()
 
-def play(game, bot):
-    while True:
-        guessed_letter = bot.guess(game)
-        resp_json = game.post({"letter": guessed_letter})
-        result = resp_json["outcome"]
-        if result == "win" or result == "lose":
-            break
-    return resp_json
+    @staticmethod
+    def play(game, bot):
+        while True:
+            guessed_letter = bot.guess(game)
+            resp_json = game.post({"letter": guessed_letter})
+            result = resp_json["outcome"]
+            if result == "win" or result == "lose":
+                break
+        return resp_json
 
 
 def main():
@@ -45,26 +54,16 @@ def main():
         }
     }
 
-    # TODO: Bots should be stateless
+    # TODO: Make bots restartable
     bots = {
-        "BasicRandomBot": RandomPlayer(),
-        "NaiveFreqBot": NaivePlayer()
+        "BasicRandomBot": RandomPlayer,
+        "NaiveFreqBot": NaivePlayer
     }
-    sample_size = 1000
-    logger = HangmanLogger()
-    for setting_name, setting in settings.items():
-        for i in range(sample_size):
-            print(f"Running Exp for Game {setting_name}...")
-            if i % 100 == 0:
-                print(f"\t{i} out of {sample_size} are done...")
-            game = Hangman(setting)
-            for bot_name, bot in bots.items():
-                _game = deepcopy(game)
-                _bot = deepcopy(bot)
-                last_resp_json = play(_game, _bot)
-                logger.log(bot_name, setting_name, settings_serializer(last_resp_json))
 
-    logger.export_logs()
+    logger = HangmanLogger()
+
+    experiment = Experiment(settings, bots, logger, 1000)
+    experiment.Run()
 
 
 if __name__ == '__main__':
